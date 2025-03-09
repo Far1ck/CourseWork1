@@ -20,13 +20,13 @@ public class EmployeeBook {
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Employee employee : employees) {
             if (employee.getFullName() != null || employee.getDepartment() != -1 || employee.getSalary() != -1.0) {
-                result = result + employee.toString();
+                result.append(employee.toString());
             }
         }
-        return result;
+        return result.toString();
     }
 
     public double getSalaryCostsPerMonth() {
@@ -40,8 +40,17 @@ public class EmployeeBook {
     }
 
     public Employee getMinWageEmployee() {
-        int minSal = 0;
-        for (int i = 1; i < employees.length; i++) {
+        int minSal = -1;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getSalary() != -1.0) {
+                minSal = i;
+                break;
+            }
+        }
+        if (minSal == -1) {
+            return null;
+        }
+        for (int i = minSal + 1; i < employees.length; i++) {
             if (employees[i].getSalary() != -1.0 && employees[i].getSalary() < employees[minSal].getSalary()) {
                 minSal = i;
             }
@@ -50,13 +59,18 @@ public class EmployeeBook {
     }
 
     public Employee getMaxWageEmployee() {
-        int maxSal = 0;
-        for (int i = 1; i < employees.length; i++) {
-            if (employees[i].getSalary() != -1.0 && employees[i].getSalary() > employees[maxSal].getSalary()) {
-                maxSal = i;
+        int maxSalIndex = -1;
+        double maxSal = -1;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i].getSalary() != -1.0 && employees[i].getSalary() > maxSal) {
+                maxSal = employees[i].getSalary();
+                maxSalIndex = i;
             }
         }
-        return employees[maxSal];
+        if (maxSalIndex == -1) {
+            return null;
+        }
+        return employees[maxSalIndex];
     }
 
     public double getAverageSalary() {
