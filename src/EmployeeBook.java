@@ -40,37 +40,27 @@ public class EmployeeBook {
     }
 
     public Employee getMinWageEmployee() {
-        int minSal = -1;
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getSalary() != -1.0) {
-                minSal = i;
-                break;
+        Employee result = null;
+        double minSal = 999_999_999_999.0;
+        for (Employee employee : employees) {
+            if (employee.getSalary() != -1.0 && employee.getSalary() < minSal) {
+                minSal = employee.getSalary();
+                result = employee;
             }
         }
-        if (minSal == -1) {
-            return null;
-        }
-        for (int i = minSal + 1; i < employees.length; i++) {
-            if (employees[i].getSalary() != -1.0 && employees[i].getSalary() < employees[minSal].getSalary()) {
-                minSal = i;
-            }
-        }
-        return employees[minSal];
+        return result;
     }
 
     public Employee getMaxWageEmployee() {
-        int maxSalIndex = -1;
+        Employee result = null;
         double maxSal = -1;
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getSalary() != -1.0 && employees[i].getSalary() > maxSal) {
-                maxSal = employees[i].getSalary();
-                maxSalIndex = i;
+        for (Employee employee : employees) {
+            if (employee.getSalary() != -1.0 && employee.getSalary() > maxSal) {
+                maxSal = employee.getSalary();
+                result = employee;
             }
         }
-        if (maxSalIndex == -1) {
-            return null;
-        }
-        return employees[maxSalIndex];
+        return result;
     }
 
     public double getAverageSalary() {
@@ -110,48 +100,34 @@ public class EmployeeBook {
         if (department < 1 || department > 5) {
             throw new IllegalArgumentException("Такого отдела нет");
         }
-        int minSal = -1;
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getDepartment() == department) {
-                minSal = i;
-                break;
-            }
-            if (i == employees.length - 1 && minSal == -1) {
-                return null;
-            }
-        }
-        for (int i = minSal + 1; i < employees.length; i++) {
-            if (employees[i].getDepartment() == department
-                    && employees[i].getSalary() != -1.0
-                    && employees[i].getSalary() < employees[minSal].getSalary()) {
-                minSal = i;
+        Employee result = null;
+        double minSal = 999_999_999_999.0;
+        for (Employee employee : employees) {
+            if (employee.getDepartment() == department
+                    && employee.getSalary() != -1.0
+                    && employee.getSalary() < minSal) {
+                minSal = employee.getSalary();
+                result = employee;
             }
         }
-        return employees[minSal];
+        return result;
     }
 
     public Employee getMaxWageEmployeeInTheDepartment(int department) {
         if (department < 1 || department > 5) {
             throw new IllegalArgumentException("Такого отдела нет");
         }
-        int maxSal = -1;
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getDepartment() == department) {
-                maxSal = i;
-                break;
-            }
-            if (i == employees.length - 1 && maxSal == -1) {
-                return null;
-            }
-        }
-        for (int i = maxSal + 1; i < employees.length; i++) {
-            if (employees[i].getDepartment() == department
-                    && employees[i].getSalary() != -1.0
-                    && employees[i].getSalary() > employees[maxSal].getSalary()) {
-                maxSal = i;
+        Employee result = null;
+        double maxSal = -1;
+        for (Employee employee : employees) {
+            if (employee.getDepartment() == department
+                    && employee.getSalary() != -1.0
+                    && employee.getSalary() > maxSal) {
+                maxSal = employee.getSalary();
+                result = employee;
             }
         }
-        return employees[maxSal];
+        return result;
     }
 
     public double getSalaryCostsPerMonthInTheDepartment(int department) {
